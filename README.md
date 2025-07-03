@@ -54,9 +54,10 @@ The FPU supports:
 ```bash
 .
 ├── fpu.v                   # Top-level FPU module (with ADD, SUB, MUL, DIV logic)
-├── program_counter.v       # 8-bit PC with synchronous reset
+├── data_memory.v           # 128-bit-wide data memory (stores 64-bit operand pairs)
 ├── instruction_memory.v    # 16-bit-wide instruction memory (13+1+2 format)
-├── data_memory.v           # 128-bit-wide data memory (stores 64-bit operand pairs) 
+├── program_counter.v       # 8-bit PC with synchronous reset
 ├── fpu_tb1.v               # Testbench 1 – basic arithmetic with real output
-├── fpu_tb2.v               # Testbench 2 – Full-system test (PC, IM, DM + FPU)
+├── fpu_tb2.v               # Testbench 2 – extended tests with edge cases
+├── fpu_tb3.v               # Testbench 3 – Full-system test (PC, IM, DM + FPU)
 └── README.md               # This file
