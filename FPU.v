@@ -172,7 +172,7 @@ module FPU_MUL (
     
     //If sum of both exponents is less than 1023(bias) then Underflow condition
     assign Underflow = ((exponent[11] & exponent[10]) & !zero); 
-    assign result = Exception ? 64'd0 : zero ? {sign,64'd0} : Overflow ? {sign,11'h7FF,52'd0} : Underflow ? {sign,63'd0} : {sign,exponent[10:0],product_mantissa};
+    assign result = Exception ? 64'd0 : zero ? {sign, 63'd0} : Overflow ? {sign,11'h7FF,52'd0} : Underflow ? {sign,63'd0} : {sign,exponent[10:0],product_mantissa};
     
     endmodule
 
@@ -191,7 +191,7 @@ module FPU_DIV(
     wire [51:0] frac_a = a[51:0];
     wire [51:0] frac_b = b[51:0];
 
-    //for  normal & purely fractional number
+    // Building Mantissas with Hidden Bit
     wire [53:0] mant_a = (|exp_a) ? {1'b1, frac_a} : {1'b0, frac_a};
     wire [53:0] mant_b = (|exp_b) ? {1'b1, frac_b} : {1'b0, frac_b};
 
