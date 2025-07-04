@@ -150,14 +150,16 @@ module FPU_MUL (
     assign operand_b = (|b[62:52]) ? {1'b1,b[51:0]} : {1'b0,b[51:0]};
     
     //Calculating Product
-    assign product = operand_a * operand_b;	
+    assign product = operand_a * operand_b;	// 53 bits* 53 bits = 106 bits
     
-    //Ending 51 bits are OR'ed for rounding operation.
-    assign product_round = |product_normalised[51:0];  
-    assign normalised = product[105] ? 1'b1 : 1'b0;	
-    
-    //Assigning Normalised value based on 106th bit
-    assign product_normalised = normalised ? product : product << 1;	
+    // Determine if the product is already normalized (MSB = 1 at bit 105)
+    assign normalised = product[105] ? 1'b1 : 1'b0;
+	
+    //If bit 105 = 0, then the product looks like 0.1xxx... we left shift by 1 to move the leading 1 into the MSB position
+    assign product_normalised = normalised ? product : product << 1;
+
+    // OR of lower 52 bits of normalized product to check for rounding
+    assign product_round = |product_normalised[51:0];  	
     
     //Final Manitssa.
     assign product_mantissa = product_normalised[104:53] + (product_normalised[52] & product_round); 
@@ -165,7 +167,7 @@ module FPU_MUL (
     assign sum_exponent = a[62:52] + b[62:52];
     assign exponent = sum_exponent - 11'd1023 + normalised;
     
-    //If overall exponent is greater than 2047(max) then Overflow condition.
+    //If overall exponent is greater than 2047(max) then Overflow condition
     assign Overflow = ((exponent[11] & !exponent[10]) & !zero) ; 
     
     //If sum of both exponents is less than 1023(bias) then Underflow condition.
