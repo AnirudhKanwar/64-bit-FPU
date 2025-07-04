@@ -168,10 +168,10 @@ module FPU_MUL (
     assign exponent = sum_exponent - 11'd1023 + normalised;
     
     //If overall exponent is greater than 2047(max) then Overflow condition
-    assign Overflow = ((exponent[11] & !exponent[10]) & !zero) ; 
+    assign Overflow = ((exponent[11] & !exponent[10]) & !zero); 
     
-    //If sum of both exponents is less than 1023(bias) then Underflow condition.
-    assign Underflow = ((exponent[11] & exponent[10]) & !zero) ? 1'b1 : 1'b0; 
+    //If sum of both exponents is less than 1023(bias) then Underflow condition
+    assign Underflow = ((exponent[11] & exponent[10]) & !zero); 
     assign result = Exception ? 64'd0 : zero ? {sign,64'd0} : Overflow ? {sign,11'h7FF,52'd0} : Underflow ? {sign,63'd0} : {sign,exponent[10:0],product_mantissa};
     
     endmodule
