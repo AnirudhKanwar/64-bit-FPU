@@ -128,7 +128,7 @@ module FPU_MUL (
 		output Exception,Overflow,Underflow,
 		output [63:0] result
 		);
-    // Exception: Flagged if either input is NaN or Inf
+    //Exception: Flagged if either input is NaN or Inf
     //Overflow: Result exceeds max exponent
     //Underflow: Result below min exponent (close to zero)
 
