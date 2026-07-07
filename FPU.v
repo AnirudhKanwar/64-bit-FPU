@@ -61,11 +61,17 @@ module FPU_ADD_SUB (
         sign_a = a[63];
         exp_a = a[62:52];
         mant_a = (exp_a == 0) ? {1'b0, a[51:0]} : {1'b1, a[51:0]};  // handle denormals
+		//Assigining significand values according to Hidden Bit.
+    	// If exponent = 0, denormalized then leading 0 ( hidden bit=0) (0.xxx...)
+    	// If exponent ≠ 0, normalized then implicit leading 1 ( hidden bit=1)
 
         // Unpack input b
         sign_b = b[63] ^ op; // Flip sign if subtraction takes place
         exp_b = b[62:52];
         mant_b = (exp_b == 0) ? {1'b0, b[51:0]} : {1'b1, b[51:0]};
+		//Assigining significand values according to Hidden Bit.
+    	// If exponent = 0, denormalized then leading 0 ( hidden bit=0) (0.xxx...)
+    	// If exponent ≠ 0, normalized then implicit leading 1 ( hidden bit=1)
 
         // Handle NaN
         if ((exp_a == 11'h7FF && mant_a[51:0] != 0) || (exp_b == 11'h7FF && mant_b[51:0] != 0)) begin
