@@ -97,7 +97,7 @@ Unpacks both operands (with denormal-aware hidden-bit handling), flips `b`'s sig
 Unpacks operands, multiplies 53-bit significands into a 106-bit product, normalizes by checking the top bit, rounds using a guard-bit + sticky-bit ("round half up when a nonzero remainder exists") scheme, computes the combined exponent with bias correction, and flags overflow/underflow using the sign bits of an intentionally oversized 12-bit exponent register. NaN/Infinity inputs currently collapse to a `0` result rather than propagating.
 
 ### `FPU_DIV`
-Unpacks operands, scales the dividend by `2^53` before integer division to preserve 53 fractional bits, computes an initial exponent estimate, normalizes the quotient by shifting until the leading bit is found, and extracts the 52 post-normalization bits as the stored fraction. Divide-by-zero and zero-dividend are special-cased directly to hardcoded `+Infinity` / `+0` patterns (see [Known limitations](#known-limitations) — the sign bit is not applied in either case, and there's no separate NaN/Infinity input handling or exponent overflow/underflow check).
+Unpacks operands, scales the dividend by `2^53` before integer division to preserve 53 fractional bits, computes an initial exponent estimate, normalizes the quotient by shifting until the leading bit is found, and extracts the 52 post-normalization bits as the stored fraction. Divide-by-zero and zero-dividend are special-cased directly to hardcoded `+Infinity` / `+0` patterns.
 
 ### `DataMemory` / `InstructionMemory` / `ProgramCounter`
 Simple combinational-read memories and a free-running synchronous counter, described in [Memory Architecture](#-memory-architecture) above.
