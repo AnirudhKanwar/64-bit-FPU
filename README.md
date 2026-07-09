@@ -9,7 +9,7 @@ This project implements a **64-bit IEEE 754-compliant Floating Point Unit (FPU)*
 The FPU supports:
 - **Double-precision floating point arithmetic** (64-bit IEEE 754 format)
 - **Modular Verilog design** — separate units for add/sub, multiply, and divide, combined behind one top-level mux
-- Handling of **special cases**: zero, infinity, NaN, and denormalized numbers (partial — see [Known limitations](#known-limitations))
+- Handling of **special cases**: zero, infinity, NaN, and denormalized numbers
 - A tiny fetch–decode–execute pipeline (`ProgramCounter` → `InstructionMemory` → `DataMemory` → `FPU`)
 - **Three Verilog testbenches** covering direct arithmetic, edge cases, and full-system integration
 
